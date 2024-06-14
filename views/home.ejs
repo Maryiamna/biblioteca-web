@@ -17,9 +17,48 @@
     <link rel="stylesheet" href="style/style.css">
     <link rel="shortcut icon" href="./bookshelf.ico" type="image/x-icon">
   </head>
+
   <body>
     <div class="container-fluid">
-      <%- include('./navbar.ejs', { activePage: 'home' }) %>
+      <div class="row flex-nowrap">
+        <%- include('./navbar.ejs', { activePage: 'home' }) %>
+      </div>
+
+      <div class="col py-3">
+        <div class="d-flex justify-content-end"> <!-- Utilizando flexbox para alinhar à direita -->
+          <nav class="navbar navbar-light">
+            <form class="form-inline" method="get" action="/pesquisarHome">
+              <input
+                class="form-control mr-sm-2"
+                name="pesquisa"
+                type="search"
+                placeholder="Pesquisar"
+                aria-label="Search"
+              />
+              <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
+                <i class="fa fa-search fa-fw"></i>
+              </button>
+            </form>
+          </nav>
+        </div>
+        <hr>
+
+        <div class="row">
+          <% emprestimos.forEach((emprestimo) => { %>
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+              <a href="/infoEmprestimo?id_emprestimo=<%= emprestimo.id_emprestimo%>" class="card-link">
+              <div class="card mb-3">
+                <div class="card-body">
+                  <h5 class="card-title"><%= emprestimo.titulo %></h5>
+                  <p class="card-text">Usuário: <%= emprestimo.nome %></p>
+                  <p class="card-text">Dias de atraso: <%= emprestimo.dias_atraso %></p>
+                </div>
+              </div>
+            </a>
+            </div>
+          <% }); %>
+        </div>
+      </div>
     </div>
 
     <script
@@ -39,6 +78,5 @@
       integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
       crossorigin="anonymous"
     ></script>
-
   </body>
 </html>
